@@ -15,7 +15,13 @@ import {
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
+import {Link as ReactRouterLink} from "react-router-dom";
+
 import * as Yup from "yup";
+
+import { useToast } from '@chakra-ui/react';
+
+import { SecondarySiteRoutes } from "../../_base/SiteRoutes.jsx";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -28,21 +34,21 @@ const ErrorLabel = ({ children }) => (
 
 const SignIn = () => {
 
+  const toast = useToast();
+
   return (
     <Flex
-      minH={"20vh"}
+      minH={"100vh"}
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}>
-
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            To enjoy all of our cool features ✌️
           </Text>
         </Stack>
-
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
@@ -53,8 +59,17 @@ const SignIn = () => {
               email: "",
               password: ""
             }}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={async (values) => {
+              const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+              await sleep(5000);
+
+              toast({
+                title: 'Account created. (' + values.email + '-' + values.password + ')',
+                description: "We've created your account for you.",
+                status: 'success',
+                duration: 5000,
+                isClosable: false,
+              });
             }}
             validationSchema={SignInSchema}
             >
@@ -83,9 +98,12 @@ const SignIn = () => {
                       direction={{ base: "column", sm: "row" }}
                       align={"start"}
                       justify={"space-between"}>
-                      <Checkbox disabled>Remember me</Checkbox>
+                      {/*<Checkbox disabled>Remember me</Checkbox>*/}
                     </Stack>
-                    <Button type={"submit"}
+                    <Button
+                      isLoading={props.isSubmitting}
+                      loadingText='Submitting'
+                      type={"submit"}
                       bg={"blue.400"}
                       color={"white"}
                       _hover={{
@@ -93,6 +111,17 @@ const SignIn = () => {
                       }}>
                       Sign in
                     </Button>
+                  </Stack>
+                  <Stack pt={6}>
+                    <Text align={'center'}>
+                      New user?
+                      {/* insert space */}
+                      <Text as={'span'} mx={1} />
+                      <Link
+                        to={SecondarySiteRoutes.find(route => route.key === "sign-up").path}
+                        color={'blue.400'}
+                        as={ReactRouterLink}>Sign Up</Link>
+                    </Text>
                   </Stack>
                 </Form>
               )}

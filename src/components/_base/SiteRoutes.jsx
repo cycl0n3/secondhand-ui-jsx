@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Home from "../pages/Home/Home";
+
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 

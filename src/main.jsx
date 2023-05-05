@@ -7,7 +7,7 @@ import "./index.css";
 
 import {ChakraProvider, ColorModeScript} from '@chakra-ui/react';
 
-import theme from '../src/components/_theme/theme';
+import theme from './components/_theme/theme.js';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

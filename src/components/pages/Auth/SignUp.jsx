@@ -16,7 +16,12 @@ import {
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
+
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+
+import { Link as ReactRouterLink } from "react-router-dom";
+
+import { SecondarySiteRoutes} from "../../_base/SiteRoutes";
 
 const SignUp = () => {
 
@@ -24,7 +29,7 @@ const SignUp = () => {
 
   return (
     <Flex
-      minH={'100vh'}
+      minH={'20vh'}
       align={'center'}
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}>
@@ -34,7 +39,7 @@ const SignUp = () => {
             Sign up
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            To enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box
@@ -90,7 +95,13 @@ const SignUp = () => {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'blue.400'}>Login</Link>
+                Already a user?
+                {/* insert space */}
+                <Text as={'span'} mx={1} />
+                <Link
+                  to={SecondarySiteRoutes.find(route => route.key === "sign-in").path}
+                  color={'blue.400'}
+                  as={ReactRouterLink}>Sign In</Link>
               </Text>
             </Stack>
           </Stack>

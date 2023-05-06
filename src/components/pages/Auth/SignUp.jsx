@@ -21,11 +21,12 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { Link as ReactRouterLink } from "react-router-dom";
 
-import { SecondarySiteRoutes} from "../../_base/SiteRoutes";
+import { SecondarySiteRoutes} from "../../base/SiteRoutes";
 
 const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <Flex
@@ -56,7 +57,7 @@ const SignUp = () => {
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
+                <FormControl id="lastName" isRequired>
                   <FormLabel>Last Name</FormLabel>
                   <Input type="text" />
                 </FormControl>
@@ -77,6 +78,21 @@ const SignUp = () => {
                       setShowPassword((showPassword) => !showPassword)
                     }>
                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl id="confirmPassword" isRequired>
+              <FormLabel>Confirm Password</FormLabel>
+              <InputGroup>
+                <Input type={showConfirmPassword ? 'text' : 'password'} />
+                <InputRightElement h={'full'}>
+                  <Button
+                    variant={'ghost'}
+                    onClick={() =>
+                      setShowConfirmPassword((showPassword) => !showPassword)
+                    }>
+                    {showConfirmPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>

@@ -6,9 +6,9 @@ import {
   createRoutesFromElements, RouterProvider,
 } from "react-router-dom";
 
-import SiteLayout from "./components/_base/SiteLayout";
+import SiteLayout from "./components/base/SiteLayout";
 
-import {PrimarySiteRoutes, SecondarySiteRoutes} from "./components/_base/SiteRoutes";
+import {PrimarySiteRoutes, SecondarySiteRoutes} from "./components/base/SiteRoutes";
 
 
 function App() {

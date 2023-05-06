@@ -18,10 +18,10 @@ const login = (username, password) => {
   );
 };
 
-const register = (username, email, password) => {
+const register = (first_name, last_name, email, password) => {
   return client.post(
     "/auth/register",
-    qs.stringify({ username, email, password }),
+    qs.stringify({ first_name, last_name, email, password }),
     {
       headers: { "Content-Type": "application/x-www-form-urlencoded" }
     }

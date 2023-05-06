@@ -21,9 +21,13 @@ import * as Yup from "yup";
 
 import { useToast } from '@chakra-ui/react';
 
-import { SecondarySiteRoutes } from "../../_base/SiteRoutes.jsx";
+import { SecondarySiteRoutes } from "../../base/SiteRoutes.jsx";
 
 import { net } from "../../io/net.js";
+
+import { UserContext } from "../../context/UserContext.jsx";
+
+import { useContext } from "react";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -37,6 +41,7 @@ const ErrorLabel = ({ children }) => (
 const SignIn = () => {
 
   const toast = useToast();
+  const { user, setUserToLocalStorage } = useContext(UserContext);
 
   return (
     <Flex
@@ -48,7 +53,7 @@ const SignIn = () => {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            To enjoy all of our cool features ✌️
+            To enjoy all of our cool features ✌️ {user && user.email}
           </Text>
         </Stack>
         <Box
@@ -63,7 +68,8 @@ const SignIn = () => {
             }}
             onSubmit={async (values) => {
               net.login(values.email, values.password).then((res) => {
-                console.log(res.data);
+                const user = res.data.user;
+                setUserToLocalStorage(user);
                 toast({
                   title: 'Account login successful.',
                   status: 'success',

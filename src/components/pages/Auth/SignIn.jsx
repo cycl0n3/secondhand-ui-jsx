@@ -23,6 +23,8 @@ import { useToast } from '@chakra-ui/react';
 
 import { SecondarySiteRoutes } from "../../_base/SiteRoutes.jsx";
 
+import { net } from "../../io/net.js";
+
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Email is required"),
   password: Yup.string().required("Password is required")
@@ -60,15 +62,16 @@ const SignIn = () => {
               password: ""
             }}
             onSubmit={async (values) => {
-              const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-              await sleep(5000);
-
-              toast({
-                title: 'Account created. (' + values.email + '-' + values.password + ')',
-                description: "We've created your account for you.",
-                status: 'success',
-                duration: 5000,
-                isClosable: false,
+              net.login(values.email, values.password).then((res) => {
+                console.log(res.data);
+                toast({
+                  title: 'Account login successful.',
+                  status: 'success',
+                  duration: 2500,
+                  isClosable: false,
+                });
+              }).catch((err) => {
+                console.log(err);
               });
             }}
             validationSchema={SignInSchema}

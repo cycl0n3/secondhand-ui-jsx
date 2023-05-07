@@ -10,7 +10,7 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue
+  useColorModeValue, Center
 } from "@chakra-ui/react";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -28,6 +28,8 @@ import { net } from "../../io/net.js";
 import { UserContext } from "../../context/UserContext.jsx";
 
 import { useContext } from "react";
+
+import { FcGoogle } from "react-icons/fc";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -119,6 +121,14 @@ const SignIn = () => {
                         bg: "blue.500"
                       }}>
                       Sign in
+                    </Button>
+                  </Stack>
+                  <Stack spacing={10} py={5}>
+                    {/* Google */}
+                    <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                      <Center>
+                        <Text>Sign in with Google</Text>
+                      </Center>
                     </Button>
                   </Stack>
                   <Stack pt={6}>

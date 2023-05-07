@@ -12,8 +12,8 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
-} from '@chakra-ui/react';
+  Link, Center
+} from "@chakra-ui/react";
 
 import { useState } from 'react';
 
@@ -22,6 +22,8 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as ReactRouterLink } from "react-router-dom";
 
 import { SecondarySiteRoutes} from "../../base/SiteRoutes";
+
+import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {
 
@@ -107,6 +109,14 @@ const SignUp = () => {
                   bg: 'blue.500',
                 }}>
                 Sign up
+              </Button>
+            </Stack>
+            <Stack spacing={10} py={5}>
+              {/* Google */}
+              <Button w={'full'} variant={'outline'} leftIcon={<FcGoogle />}>
+                <Center>
+                  <Text>Sign up with Google</Text>
+                </Center>
               </Button>
             </Stack>
             <Stack pt={6}>

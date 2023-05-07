@@ -5,6 +5,8 @@ import Home from "../pages/Home/Home";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 
+import Contact from "../pages/Contact/Contact";
+
 export const PrimarySiteRoutes = [
   {
     path: '/',
@@ -27,7 +29,7 @@ export const PrimarySiteRoutes = [
     label: 'Contact',
     key: 'contact',
     element: <>
-      <div>Contact</div>
+      <Contact />
     </>,
   },
   {

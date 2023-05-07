@@ -14,6 +14,7 @@ import {
   Image,
   useDisclosure,
   useColorModeValue,
+  useColorMode,
   Stack
 } from "@chakra-ui/react";
 
@@ -32,6 +33,7 @@ import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 
 import { CgLogOff } from "react-icons/cg";
+import { BsMoonStarsFill, BsSun } from "react-icons/all.js";
 
 const NavLink = ({ href, page, children }) => {
   const color = page.path === href ? useColorModeValue("red.100", "blue.900") : useColorModeValue("gray.100", "gray.900");
@@ -53,12 +55,14 @@ const NavLink = ({ href, page, children }) => {
   </Box>;
 };
 
-const SiteLayout = () => {
+const SiteLayout = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { user, setUserToLocalStorage } = useContext(UserContext);
 
   const location = useLocation();
+
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const currentPage = PrimarySiteRoutes.find((route) => route.path === location.pathname) ||
     SecondarySiteRoutes.find((route) => route.path === location.pathname);
@@ -117,6 +121,14 @@ const SiteLayout = () => {
               </MenuItem>
             </MenuList>
           </Menu>}
+          <Button
+            aria-label="Toggle Color Mode"
+            onClick={toggleColorMode}
+            _focus={{ boxShadow: 'none' }}
+            w="fit-content"
+            {...props}>
+            {colorMode === 'light' ? <BsMoonStarsFill /> : <BsSun />}
+          </Button>
         </Flex>
       </Flex>
 

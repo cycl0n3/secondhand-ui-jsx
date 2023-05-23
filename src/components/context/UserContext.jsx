@@ -13,23 +13,25 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const getUserFromLocalStorage = () => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
     return user ? JSON.parse(user) : null;
-  }
+  };
 
   const setUserToLocalStorage = (user) => {
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
     setUser(user);
-  }
+  };
 
   const removeUserFromLocalStorage = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
-  }
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUserToLocalStorage, removeUserFromLocalStorage }}>
+    <UserContext.Provider
+      value={{ user, setUserToLocalStorage, removeUserFromLocalStorage }}
+    >
       {children}
     </UserContext.Provider>
   );
-}
+};

@@ -3,13 +3,16 @@ import "./App.css";
 import {
   Route,
   createBrowserRouter,
-  createRoutesFromElements, RouterProvider,
+  createRoutesFromElements,
+  RouterProvider,
 } from "react-router-dom";
 
 import SiteLayout from "./components/base/SiteLayout";
 
-import {PrimarySiteRoutes, SecondarySiteRoutes} from "./components/base/SiteRoutes";
-
+import {
+  PrimarySiteRoutes,
+  SecondarySiteRoutes,
+} from "./components/base/SiteRoutes";
 
 function App() {
   const router = createBrowserRouter(
@@ -30,9 +33,11 @@ function App() {
     )
   );
 
-  return (<>
-    <RouterProvider router={router} />
-  </>);
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

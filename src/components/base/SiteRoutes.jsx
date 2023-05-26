@@ -6,8 +6,9 @@ import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 
 import Contact from "../pages/Contact/Contact";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
-export const PrimarySiteRoutes = [
+export const GuestRoutes = [
   {
     path: "/",
     label: "Home",
@@ -38,19 +39,9 @@ export const PrimarySiteRoutes = [
       </>
     ),
   },
-  {
-    path: "/dashboard",
-    label: "Dashboard",
-    key: "dashboard",
-    element: (
-      <>
-        <div>Dashboard</div>
-      </>
-    ),
-  },
 ];
 
-export const SecondarySiteRoutes = [
+export const AuthRoutes = [
   {
     path: "/sign-in",
     label: "Sign In",
@@ -68,6 +59,29 @@ export const SecondarySiteRoutes = [
     element: (
       <>
         <SignUp />
+      </>
+    ),
+  },
+];
+
+export const UserRoutes = [
+  {
+    path: "/dashboard",
+    label: "Dashboard",
+    key: "dashboard",
+    element: (
+      <>
+        <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: "/catboard",
+    label: "Catboard",
+    key: "catboard",
+    element: (
+      <>
+        <div>Catboard</div>
       </>
     ),
   },

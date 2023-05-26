@@ -20,11 +20,11 @@ import {
 
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
-import { PrimarySiteRoutes, SecondarySiteRoutes } from "./SiteRoutes";
+import { GuestRoutes, AuthRoutes, UserRoutes } from "./SiteRoutes";
 
 import { nanoid } from "nanoid";
 
-import { Outlet, Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { Outlet, Link as ReactRouterLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/logo-1.jpg";
 
@@ -67,13 +67,18 @@ const SiteLayout = (props) => {
 
   const { user, setUserToLocalStorage } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   const location = useLocation();
 
   const { colorMode, toggleColorMode } = useColorMode();
 
   const currentPage =
-    PrimarySiteRoutes.find((route) => route.path === location.pathname) ||
-    SecondarySiteRoutes.find((route) => route.path === location.pathname);
+    GuestRoutes.find((route) => route.path === location.pathname) ||
+    AuthRoutes.find((route) => route.path === location.pathname) ||
+    UserRoutes.find((route) => route.path === location.pathname);
+
+  const sign_in_url = AuthRoutes.find((route) => route.path === "/sign-in").path;
 
   return (
     <>
@@ -100,20 +105,30 @@ const SiteLayout = (props) => {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {PrimarySiteRoutes.map((route) => (
-                <NavLink key={nanoid(5)} href={route.path} page={currentPage}>
-                  {route.label}
-                </NavLink>
-              ))}
+              {!user &&
+                GuestRoutes.map((route) => (
+                  <NavLink key={nanoid(5)} href={route.path} page={currentPage}>
+                    {route.label}
+                  </NavLink>
+                ))
+              }
+              {user &&
+                UserRoutes.map((route) => (
+                  <NavLink key={nanoid(5)} href={route.path} page={currentPage}>
+                    {route.label}
+                  </NavLink>
+                ))
+              }
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
             {!user &&
-              SecondarySiteRoutes.map((route) => (
+              AuthRoutes.map((route) => (
                 <NavLink key={nanoid(5)} href={route.path} page={currentPage}>
                   {route.label}
                 </NavLink>
-              ))}
+              ))
+            }
             {user && (
               <Menu>
                 <MenuButton
@@ -134,6 +149,7 @@ const SiteLayout = (props) => {
                   <MenuItem
                     onClick={() => {
                       setUserToLocalStorage(null);
+                      navigate(sign_in_url);
                     }}
                     icon={<Icon as={CgLogOff} boxSize={6} />}
                   >
@@ -143,6 +159,7 @@ const SiteLayout = (props) => {
               </Menu>
             )}
             <Button
+              marginLeft={5}
               aria-label="Toggle Color Mode"
               onClick={toggleColorMode}
               _focus={{ boxShadow: "none" }}
@@ -157,7 +174,7 @@ const SiteLayout = (props) => {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {PrimarySiteRoutes.map((route) => (
+              {GuestRoutes.map((route) => (
                 <NavLink key={nanoid(5)} href={route.path} page={currentPage}>
                   {route.label}
                 </NavLink>

@@ -21,7 +21,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { Link as ReactRouterLink } from "react-router-dom";
 
-import { SecondarySiteRoutes} from "../../base/SiteRoutes";
+import { AuthRoutes} from "../../base/SiteRoutes";
 
 import { FcGoogle } from "react-icons/fc";
 
@@ -125,7 +125,7 @@ const SignUp = () => {
                 {/* insert space */}
                 <Text as={'span'} mx={1} />
                 <Link
-                  to={SecondarySiteRoutes.find(route => route.key === "sign-in").path}
+                  to={AuthRoutes.find(route => route.key === "sign-in").path}
                   color={'blue.400'}
                   as={ReactRouterLink}>Sign In</Link>
               </Text>

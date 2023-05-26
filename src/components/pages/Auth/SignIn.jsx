@@ -15,13 +15,13 @@ import {
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import {Link as ReactRouterLink} from "react-router-dom";
+import { Link as ReactRouterLink, useLocation, useNavigate } from "react-router-dom";
 
 import * as Yup from "yup";
 
 import { useToast } from '@chakra-ui/react';
 
-import { SecondarySiteRoutes } from "../../base/SiteRoutes.jsx";
+import { GuestRoutes, AuthRoutes, UserRoutes } from "../../base/SiteRoutes.jsx";
 
 import { net } from "../../io/net.js";
 
@@ -41,6 +41,11 @@ const ErrorLabel = ({ children }) => (
 );
 
 const SignIn = () => {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const dashboard_url = UserRoutes.find((route) => route.path === "/dashboard").path;
 
   const toast = useToast();
   const { user, setUserToLocalStorage } = useContext(UserContext);
@@ -69,15 +74,32 @@ const SignIn = () => {
               password: ""
             }}
             onSubmit={async (values) => {
+              // sleep for 2 seconds
+              await new Promise(r => setTimeout(r, 2000));
+
               net.login(values.email, values.password).then((res) => {
                 const user = res.data.user;
+                
+                const tokens = { 
+                  accessToken: res.data['access_token'], 
+                  refreshToken: res.data['refresh_token']
+                };
+
+                user.tokens = tokens;
                 setUserToLocalStorage(user);
+
                 toast({
                   title: 'Account login successful.',
                   status: 'success',
                   duration: 2500,
                   isClosable: false,
                 });
+
+                values.email = "";
+                values.password = "";
+
+                // navigate to dashboard
+                navigate(dashboard_url);
               }).catch((err) => {
                 console.log(err);
               });
@@ -90,7 +112,7 @@ const SignIn = () => {
                     <Field type="email" name="email">
                       {({ field, form }) => (<>
                         <FormLabel>Email address</FormLabel>
-                        <Input {...field} type="email" />
+                        <Input {...field} type="email" disabled={props.isSubmitting} />
                         <ErrorMessage name="email" component={ErrorLabel} />
                       </>)}
                     </Field>
@@ -99,7 +121,7 @@ const SignIn = () => {
                     <Field type="password" name="password">
                       {({ field, form }) => (<>
                         <FormLabel>Password</FormLabel>
-                        <Input {...field} type="password" />
+                        <Input {...field} type="password" disabled={props.isSubmitting} />
                         <ErrorMessage name="password" component={ErrorLabel} />
                       </>)}
                     </Field>
@@ -137,7 +159,7 @@ const SignIn = () => {
                       {/* insert space */}
                       <Text as={'span'} mx={1} />
                       <Link
-                        to={SecondarySiteRoutes.find(route => route.key === "sign-up").path}
+                        to={AuthRoutes.find(route => route.key === "sign-up").path}
                         color={'blue.400'}
                         as={ReactRouterLink}>Sign Up</Link>
                     </Text>

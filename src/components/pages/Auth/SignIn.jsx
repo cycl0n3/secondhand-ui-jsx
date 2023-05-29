@@ -21,7 +21,7 @@ import * as Yup from "yup";
 
 import { useToast } from '@chakra-ui/react';
 
-import { GuestRoutes, AuthRoutes, UserRoutes } from "../../base/SiteRoutes.jsx";
+import SiteRoutes from "../../base/SiteRoutes.jsx";
 
 import { net } from "../../io/net.js";
 
@@ -45,7 +45,7 @@ const SignIn = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dashboard_url = UserRoutes.find((route) => route.path === "/dashboard").path;
+  const dashboard_url = SiteRoutes.find((route) => route.path === "/dashboard").path;
 
   const toast = useToast();
   const { user, setUserToLocalStorage } = useContext(UserContext);
@@ -159,7 +159,7 @@ const SignIn = () => {
                       {/* insert space */}
                       <Text as={'span'} mx={1} />
                       <Link
-                        to={AuthRoutes.find(route => route.key === "sign-up").path}
+                        to={SiteRoutes.find(route => route.key === "sign-up").path}
                         color={'blue.400'}
                         as={ReactRouterLink}>Sign Up</Link>
                     </Text>

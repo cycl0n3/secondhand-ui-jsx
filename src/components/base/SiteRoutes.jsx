@@ -8,7 +8,14 @@ import SignUp from "../pages/Auth/SignUp";
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../pages/Dashboard/Dashboard";
 
-export const GuestRoutes = [
+export const ROLE_ADMIN = "ADMIN";
+export const ROLE_USER = "USER";
+export const ROLE_GUEST = "GUEST";
+export const ROLE_MODERATOR = "MODERATOR";
+
+export const FEATURE_AUTH = "AUTH";
+
+const SiteRoutes = [
   {
     path: "/",
     label: "Home",
@@ -18,6 +25,8 @@ export const GuestRoutes = [
         <Home />
       </>
     ),
+    roles: [ROLE_GUEST],
+    features: [],
   },
   {
     path: "/about",
@@ -28,6 +37,8 @@ export const GuestRoutes = [
         <div>About</div>
       </>
     ),
+    roles: [ROLE_GUEST],
+    features: [],
   },
   {
     path: "/contact",
@@ -38,10 +49,9 @@ export const GuestRoutes = [
         <Contact />
       </>
     ),
+    roles: [ROLE_GUEST],
+    features: [],
   },
-];
-
-export const AuthRoutes = [
   {
     path: "/sign-in",
     label: "Sign In",
@@ -51,6 +61,8 @@ export const AuthRoutes = [
         <SignIn />
       </>
     ),
+    roles: [ROLE_GUEST],
+    features: [FEATURE_AUTH],
   },
   {
     path: "/sign-up",
@@ -61,10 +73,9 @@ export const AuthRoutes = [
         <SignUp />
       </>
     ),
+    roles: [ROLE_GUEST],
+    features: [FEATURE_AUTH],
   },
-];
-
-export const UserRoutes = [
   {
     path: "/dashboard",
     label: "Dashboard",
@@ -74,6 +85,8 @@ export const UserRoutes = [
         <Dashboard />
       </>
     ),
+    roles: [ROLE_USER],
+    features: [],
   },
   {
     path: "/catboard",
@@ -84,5 +97,40 @@ export const UserRoutes = [
         <div>Catboard</div>
       </>
     ),
+    roles: [ROLE_USER],
+    features: [],
   },
 ];
+
+export default SiteRoutes;
+
+export function getAdminRoutes() {
+  return SiteRoutes.filter((route) => route.roles.includes(ROLE_ADMIN))
+    .filter((route) => !route.features.includes(FEATURE_AUTH));
+}
+
+export function getGuestRoutes() {
+  return SiteRoutes.filter((route) => route.roles.includes(ROLE_GUEST))
+    .filter((route) => !route.features.includes(FEATURE_AUTH));
+}
+
+export function getUserRoutes() {
+  return SiteRoutes.filter((route) => route.roles.includes(ROLE_USER))
+    .filter((route) => !route.features.includes(FEATURE_AUTH));
+}
+
+export function getModeratorRoutes() {
+  return SiteRoutes.filter((route) => route.roles.includes(ROLE_MODERATOR))
+    .filter((route) => !route.features.includes(FEATURE_AUTH));
+}
+
+export function getRoutesByRoles(roles) {
+  return SiteRoutes.filter((route) => route.roles.some((role) => roles.includes(role)))
+    .filter((route) => !route.features.includes(FEATURE_AUTH));
+}
+
+export function getRoutesByFeatures(features) {
+  return SiteRoutes.filter((route) =>
+    route.features.some((feature) => features.includes(feature))
+  );
+}

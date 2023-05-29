@@ -9,27 +9,15 @@ import {
 
 import SiteLayout from "./components/base/SiteLayout";
 
-import {
-  GuestRoutes,
-  AuthRoutes,
-  UserRoutes
-} from "./components/base/SiteRoutes";
+import SiteRoutes from "./components/base/SiteRoutes";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<SiteLayout />}>
-        <Route index element={GuestRoutes[0].element} />
+        <Route index element={SiteRoutes[0].element} />
 
-        {GuestRoutes.slice(1).map((route) => (
-          <Route key={route.key} path={route.path} element={route.element} />
-        ))}
-
-        {AuthRoutes.map((route) => (
-          <Route key={route.key} path={route.path} element={route.element} />
-        ))}
-
-        {UserRoutes.map((route) => (
+        {SiteRoutes.slice(1).map((route) => (
           <Route key={route.key} path={route.path} element={route.element} />
         ))}
 

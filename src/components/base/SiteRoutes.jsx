@@ -8,12 +8,12 @@ import SignUp from "../pages/Auth/SignUp";
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../pages/Dashboard/Dashboard";
 
-export const ROLE_ADMIN = "ADMIN";
-export const ROLE_USER = "USER";
-export const ROLE_GUEST = "GUEST";
-export const ROLE_MODERATOR = "MODERATOR";
+export const ROLE_ADMIN = 0xFA; // 250
+export const ROLE_USER = 0xFB; // 251
+export const ROLE_GUEST = 0xFC; // 252
+export const ROLE_MODERATOR = 0xFD; // 253
 
-export const FEATURE_AUTH = "AUTH";
+export const FEATURE_AUTH = 0x15E; // 350
 
 const SiteRoutes = [
   {
@@ -104,33 +104,20 @@ const SiteRoutes = [
 
 export default SiteRoutes;
 
-export function getAdminRoutes() {
-  return SiteRoutes.filter((route) => route.roles.includes(ROLE_ADMIN))
-    .filter((route) => !route.features.includes(FEATURE_AUTH));
-}
-
-export function getGuestRoutes() {
-  return SiteRoutes.filter((route) => route.roles.includes(ROLE_GUEST))
-    .filter((route) => !route.features.includes(FEATURE_AUTH));
-}
-
-export function getUserRoutes() {
-  return SiteRoutes.filter((route) => route.roles.includes(ROLE_USER))
-    .filter((route) => !route.features.includes(FEATURE_AUTH));
-}
-
-export function getModeratorRoutes() {
-  return SiteRoutes.filter((route) => route.roles.includes(ROLE_MODERATOR))
-    .filter((route) => !route.features.includes(FEATURE_AUTH));
-}
-
 export function getRoutesByRoles(roles) {
-  return SiteRoutes.filter((route) => route.roles.some((role) => roles.includes(role)))
-    .filter((route) => !route.features.includes(FEATURE_AUTH));
+  let r = SiteRoutes.filter((route) => route.roles.some((role) => roles.includes(role)));
+  // remove all routes that have features
+  r = r.filter((route) => route.features.length === 0);
+  return r;
 }
 
 export function getRoutesByFeatures(features) {
   return SiteRoutes.filter((route) =>
     route.features.some((feature) => features.includes(feature))
   );
+}
+
+export function getRoutesByRolesAndFeatures(roles, features) {
+  return SiteRoutes.filter((route) => route.roles.some((role) => roles.includes(role)))
+    .filter((route) => route.features.some((feature) => features.includes(feature)));
 }

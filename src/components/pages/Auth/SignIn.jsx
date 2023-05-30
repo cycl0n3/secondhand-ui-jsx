@@ -102,6 +102,13 @@ const SignIn = () => {
                 navigate(dashboard_url);
               }).catch((err) => {
                 console.log(err);
+
+                toast({
+                  title: 'Account login failed.',
+                  status: 'error',
+                  duration: 2500,
+                  isClosable: false,
+                });
               });
             }}
             validationSchema={SignInSchema}

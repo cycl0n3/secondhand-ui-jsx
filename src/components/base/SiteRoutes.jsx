@@ -7,6 +7,7 @@ import SignUp from "../pages/Auth/SignUp";
 
 import Contact from "../pages/Contact/Contact";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Profile from "../pages/Profile/Profile";
 
 export const ROLE_ADMIN = 0xFA; // 250
 export const ROLE_USER = 0xFB; // 251
@@ -89,12 +90,12 @@ const SiteRoutes = [
     features: [],
   },
   {
-    path: "/catboard",
-    label: "Catboard",
-    key: "catboard",
+    path: "/profile",
+    label: "Profile",
+    key: "profile",
     element: (
       <>
-        <div>Catboard</div>
+        <Profile />
       </>
     ),
     roles: [ROLE_USER],

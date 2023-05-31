@@ -32,8 +32,11 @@ const Profile = () => {
       } />
 
       <Button onClick={
-        () => {
+        async () => {
           if (file) {
+            // wait for 1 second
+            await new Promise(r => setTimeout(r, 1000));
+
             net.upload(user, file)
               .then((res) => {
                 console.log(res);
@@ -44,7 +47,8 @@ const Profile = () => {
                   duration: 5000,
                   isClosable: true,
                 });
-              }).catch((err) => {
+              })
+              .catch((err) => {
                 console.log(err);
                 toast({
                   title: "File upload failed.",
@@ -56,7 +60,7 @@ const Profile = () => {
             });
           }
         }
-      }>Upload</Button>
+      } className="primary">Upload</Button>
     </div>
   );
 }

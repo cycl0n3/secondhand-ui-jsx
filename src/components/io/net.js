@@ -24,7 +24,24 @@ const register = (first_name, last_name, email, password) => {
   );
 };
 
+const upload = (user, file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return client.post(
+    "/user/picture/" + user.id,
+    formData,
+    {
+      headers: { 
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer " + user.tokens.accessToken,
+      },
+    }
+  );
+};
+
 export const net = {
   login,
   register,
+  upload,
 };

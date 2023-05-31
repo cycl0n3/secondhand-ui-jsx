@@ -79,6 +79,7 @@ const SignIn = () => {
 
               net.login(values.email, values.password).then((res) => {
                 const user = res.data.user;
+                user.picture = res.data.picture;
                 
                 const tokens = { 
                   accessToken: res.data['access_token'], 

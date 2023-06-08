@@ -1,8 +1,10 @@
+import "./Profile.css";
+
 import { useContext, useState } from "react";
 
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, Avatar } from "@chakra-ui/react";
 
-import { useToast } from '@chakra-ui/react';
+import { useToast } from "@chakra-ui/react";
 
 import { UserContext } from "../../context/UserContext";
 
@@ -12,32 +14,46 @@ const Profile = () => {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const toast = useToast();
 
   return (
     <div>
       <h1>Profile</h1>
-      
-      {user && <>
-        <p>{user.username}</p>
-        <p>{user.email}</p>
-      </>}
-      
-      <Input type="file" onChange={
-        (e) => {
+
+      {user && (
+        <>
+          <p>{user.username}</p>
+          <p>{user.email}</p>
+
+          {user.picture && (
+            <Avatar
+              size="xl"
+              src={'data:image/png;base64,' + user.picture}
+            />
+          )}
+        </>
+      )}
+
+      <Input
+        type="file"
+        onChange={(e) => {
           if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
           }
-        }
-      } />
+        }}
+      />
 
-      <Button onClick={
-        async () => {
+      <Button
+        isLoading={loading}
+        onClick={async () => {
+          setLoading(true);
           if (file) {
-            // wait for 1 second
-            await new Promise(r => setTimeout(r, 1000));
+            await new Promise((r) => setTimeout(r, 1000));
 
-            net.upload(user, file)
+            net
+              .upload(user, file)
               .then((res) => {
                 console.log(res);
                 toast({
@@ -56,13 +72,18 @@ const Profile = () => {
                   status: "error",
                   duration: 5000,
                   isClosable: true,
+                });
+              }).finally(() => {
+                setLoading(false);
               });
-            });
           }
-        }
-      } className="primary">Upload</Button>
+        }}
+        className="primary"
+      >
+        Upload
+      </Button>
     </div>
   );
-}
+};
 
 export default Profile;
